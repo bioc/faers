@@ -1,14 +1,9 @@
-rxnorm_standardize_drug <- function(terms, exact = TRUE, approximate = TRUE, search = 2, pool_size = 5L) {
+rxnorm_searchRxcuiByString <- function(terms, exact = TRUE, approximate = TRUE,
+                                       allsrc = NULL, srclist = NULL,
+                                       search = 2L, pool_size = 5L,
+                                       retry = 0L) {
     assert_bool(exact)
     assert_bool(approximate)
-    rxnorm_map_to_rxcui(terms,
-        exact = exact, approximate = approximate,
-        search = search, pool_size = pool_size
-    )
-    # get other drug details from rxnorm
-}
-
-rxnorm_map_to_rxcui <- function(terms, exact = TRUE, approximate = TRUE, allsrc = NULL, srclist = NULL, search = NULL, pool_size = 5L, retry = 0L) {
     if (!(exact || approximate)) {
         cli::cli_abort(
             "One of {.arg exact} or {.arg approximate} must be {.code TRUE}"
@@ -41,10 +36,37 @@ rxnorm_map_to_rxcui <- function(terms, exact = TRUE, approximate = TRUE, allsrc 
 }
 
 ###########################################################
+# rxnorm_getRelatedByType("174742", c("SBD", "SBDF"))
+rxnorm_getRelatedByType <- function(rxcuis, tty, pool_size = 5L, retry = 0L) {
+    tty <- paste(tty, collapse = "+")
+    reqs <- lapply(rxcuis, function(term) {
+        rxnorm_api(.path = sprintf("rxcui/%s/related", term), tty = I(tty))
+    })
+    resps <- rxnorm_perform_parallel(
+        reqs = reqs, pool_size = pool_size, retry = retry
+    )
+    ans <- rxnorm_return_list(resps, "//conceptProperties", names = rxcuis)
+    data.table::rbindlist(ans, use.names = TRUE, fill = TRUE, idcol = "id")
+}
+# rxnorm_getRxProperty("7052", "ATC")
+rxnorm_getRxProperty <- function(rxcuis, prop_name,
+                                 pool_size = 5L, retry = 0L) {
+    reqs <- lapply(rxcuis, function(term) {
+        rxnorm_api(
+            .path = sprintf("rxcui/%s/property", term),
+            propName = prop_name
+        )
+    })
+    resps <- rxnorm_perform_parallel(
+        reqs = reqs, pool_size = pool_size, retry = retry
+    )
+    ans <- rxnorm_return_list(resps, "//propConcept", names = rxcuis)
+    data.table::rbindlist(ans, use.names = TRUE, fill = TRUE, idcol = "rxcui")
+}
 # rxnorm_getRxNormName("131725")
 rxnorm_getRxNormName <- function(rxcuis, pool_size = 5L, retry = 0L) {
     reqs <- lapply(rxcuis, function(term) {
-        rxnorm_api(.path = sprintf("rxcui/%s", term), name = term)
+        rxnorm_api(.path = sprintf("rxcui/%s", term))
     })
     resps <- rxnorm_perform_parallel(
         reqs = reqs, pool_size = pool_size, retry = retry
@@ -54,7 +76,7 @@ rxnorm_getRxNormName <- function(rxcuis, pool_size = 5L, retry = 0L) {
 # rxnorm_getDrugs("cymbalta")
 rxnorm_getDrugs <- function(names, pool_size = 5L, retry = 0L) {
     reqs <- lapply(names, function(term) {
-        rxnorm_api(.path = "drugs", name = term)
+        rxnorm_api(.path = "drugs", name = I(term))
     })
     resps <- rxnorm_perform_parallel(
         reqs = reqs, pool_size = pool_size, retry = retry
@@ -62,11 +84,14 @@ rxnorm_getDrugs <- function(names, pool_size = 5L, retry = 0L) {
     rxnorm_return_list(resps, "//conceptProperties", names = names)
 }
 # rxnorm_getApproximateMatch("zocor 10 mg")
-rxnorm_getApproximateMatch <- function(terms, max_entries = NULL, option = NULL, pool_size = 5L, retry = 0L) {
+rxnorm_getApproximateMatch <- function(terms, max_entries = NULL,
+                                       option = NULL, pool_size = 5L,
+                                       retry = 0L) {
     reqs <- lapply(terms, function(term) {
         rxnorm_api(
             .path = "approximateTerm",
-            term = term, maxEntries = max_entries, option = option
+            term = I(term),
+            maxEntries = max_entries, option = option
         )
     })
     resps <- rxnorm_perform_parallel(
@@ -83,12 +108,14 @@ rxnorm_getApproximateMatch <- function(terms, max_entries = NULL, option = NULL,
 #' @param search 0: Exact match only; 1: Normalized match; 2: Best match (exact
 #' or normalized)
 #' @noRd
-# rxnorm_findRxcuiByString(I("Lipitor+10+mg+Tab"), search = 1L)
-rxnorm_findRxcuiByString <- function(names, allsrc = NULL, srclist = NULL, search = NULL, pool_size = 5L, retry = 0L) {
+# rxnorm_findRxcuiByString("Lipitor+10+mg+Tab", search = 1L)
+rxnorm_findRxcuiByString <- function(names, allsrc = NULL, srclist = NULL,
+                                     search = NULL, pool_size = 5L,
+                                     retry = 0L) {
     reqs <- lapply(names, function(term) {
         rxnorm_api(
             .path = "rxcui",
-            name = term,
+            name = I(term),
             allsrc = allsrc,
             srclist = srclist, search = search
         )
@@ -117,7 +144,15 @@ rxnorm_getRxNormVersion <- function() {
     xml <- xml2::xml_children(xml)
     structure(xml2::xml_text(xml), names = xml2::xml_name(xml))
 }
-
+# rxnorm_getPropNames()
+rxnorm_getPropNames <- function() {
+    resp <- rxnorm_perform(rxnorm_api(.path = "propnames"))
+    xml <- xml2::xml_find_all(
+        httr2::resp_body_xml(resp, check_type = FALSE),
+        "//propName"
+    )
+    xml2::xml_text(xml)
+}
 #########################################################
 # Parse rxnorm resp list --------------------------------
 rxnorm_return_list <- function(resps, xpath, names = NULL) {
@@ -193,8 +228,7 @@ rxnorm_perform <- function(req) {
 }
 
 ###########################################################
-#' All values in dots should be named. If rxnorm_api_name is `NULL`, `path` must
-#' contain format strings used by sprintf.
+#' All values in dots should be named.
 #' @noRd
 rxnorm_api <- function(.path, ..., .format = "xml") {
     req <- httr2::req_url_path_append(
@@ -219,11 +253,7 @@ rxnorm_set_headers <- function(req) {
 rxnorm_host <- "https://rxnav.nlm.nih.gov"
 
 # check response --------------------
-resp_non_exist <- function(resp) {
-    inherits(resp, "httr2_http_404")
-}
+resp_non_exist <- function(resp) inherits(resp, "httr2_http_404")
 
 # the requst exist but failed
-resp_fail <- function(resp) {
-    inherits(resp, "httr2_failure")
-}
+resp_fail <- function(resp) inherits(resp, "httr2_failure")
