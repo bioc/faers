@@ -49,7 +49,7 @@ fda_drugs_file <- function(url = NULL, force,
         prefix = "fda_drugs_data",
         ext = "zip",
         name = "Drugs@FDA data",
-        dir = dir, 
+        dir = dir,
         method = "base", mode = "wb",
         arg = arg, call = call
     )
@@ -59,15 +59,24 @@ fda_drugs_url <- function(url = NULL,
                           arg = rlang::caller_arg(url),
                           call = rlang::caller_env()) {
     if (!is.null(url)) return(url) # styler: off
-    assert_internet(call = call)
-    url <- sprintf(
-        "%s/drugs/drug-approvals-and-databases/drugsfda-data-files",
-        fda_host("www")
-    )
-    cli::cli_inform(c(">" = "Reading html: {.url {url}}"))
-    html <- xml2::read_html(url)
-    node <- rvest::html_element(html, "[data-entity-substitution]")
-    if (inherits(node, "xml_missing")) {
+    host <- fda_host("www")
+    if (curl::has_internet()) {
+        url <- sprintf(
+            "%s/drugs/drug-approvals-and-databases/drugsfda-data-files",
+            host
+        )
+        node <- tryCatch(
+            {
+                html <- xml2::read_html(url)
+                cli::cli_inform(c(">" = "Reading html: {.url {url}}"))
+                rvest::html_element(html, "[data-entity-substitution]")
+            },
+            error = function(cnd) NULL
+        )
+    } else {
+        node <- NULL
+    }
+    if (is.null(node) || inherits(node, "xml_missing")) {
         # cli::cli_abort(c(
         #     "Cannot determine the url of {.field Drugs@FDA} file",
         #     i = "try to provide {.arg {arg}} manually"
@@ -77,5 +86,5 @@ fda_drugs_url <- function(url = NULL,
         cli::cat_line(rvest::html_text(node))
         href <- rvest::html_attr(node, "href")
     }
-    paste0(fda_host("www"), href)
+    paste0(host, href)
 }

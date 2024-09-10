@@ -12,7 +12,7 @@ information about all records' metadata in the FAERS Quarterly Data Extract
 Files Site, bypassing the cache.}
 
 \item{internal}{A boolean value. It determines whether to use the internal
-data associated with the package when no cached file is available.}
+data associated with the package.}
 }
 \value{
 A \link[data.table:data.table]{data.table} reporting years, period,

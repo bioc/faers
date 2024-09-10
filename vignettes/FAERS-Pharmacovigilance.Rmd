@@ -86,16 +86,12 @@ If it doesn't exist, the internal will parse metadata in
 <`r sprintf("%s/extensions/FPD-QDE-FAERS/FPD-QDE-FAERS.html",
 faers:::fda_host("fis"))`> 
 
-```{r}
+```{r eval=FALSE}
 faers_meta()
 ```
 
 An metadata copy was associated with the package, just set `internal = TRUE`.
-However, this copy will only be used if the cached file on your computer cannot
-be found as the cached file on your computer should be more up-to-date than this
-metadata copy.
 ```{r}
-faers_clearcache("metadata")
 faers_meta(internal = TRUE)
 ```
 

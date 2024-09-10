@@ -7,7 +7,7 @@
 #' information about all records' metadata in the FAERS Quarterly Data Extract
 #' Files Site, bypassing the cache.
 #' @param internal A boolean value. It determines whether to use the internal
-#' data associated with the package when no cached file is available.
+#' data associated with the package.
 #' @return A [data.table][data.table::data.table] reporting years, period,
 #' quarter, and file urls and file sizes.
 #' @examples
@@ -26,19 +26,16 @@ faers_meta <- function(force = FALSE, internal = !curl::has_internet()) {
 }
 
 faers_meta_cache_read <- function(internal = FALSE) {
-    file <- faers_meta_cache_file()
-    if (file.exists(file)) {
+    if (internal) {
+        out <- load_data("faers_meta_data")
+        msg <- "Using internal FAERS metadata"
+    } else if (file.exists(file <- faers_meta_cache_file())) {
         out <- readRDS(file)
         msg <- "Using FAERS metadata from cached {.file {file}}"
         # save the data in the cached environment for the usage of next time
         # like faers_available()
     } else {
-        if (internal) {
-            out <- load_data("faers_meta_data")
-            msg <- "Using internal FAERS metadata"
-        } else {
-            return(NULL)
-        }
+        return(NULL)
     }
     cli::cli_inform(c(">" = msg, " " = "Snapshot time: {out$date}"))
     out$data

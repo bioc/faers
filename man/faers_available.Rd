@@ -17,7 +17,7 @@ information about all records' metadata in the FAERS Quarterly Data Extract
 Files Site, bypassing the cache.}
 
 \item{internal}{A boolean value. It determines whether to use the internal
-data associated with the package when no cached file is available.}
+data associated with the package.}
 }
 \value{
 A logical indicates FAERS can have data for the \code{years} and
