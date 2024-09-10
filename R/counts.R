@@ -22,7 +22,7 @@
 #' @export
 #' @name faers_counts
 methods::setGeneric("faers_counts", function(.object, ...) {
-    methods::makeStandardGeneric("faers_counts")
+    standardGeneric("faers_counts")
 })
 
 #' @param ... Other arguments passed to specific methods, for `FAERSascii`

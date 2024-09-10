@@ -36,7 +36,7 @@ methods::setGeneric(
     "faers_phv_table",
     function(.object, ..., .full, .object2) {
         rlang::check_exclusive(.full, .object2)
-        methods::makeStandardGeneric("faers_phv_table")
+        standardGeneric("faers_phv_table")
     }
 )
 
@@ -128,7 +128,7 @@ utils::globalVariables(c("a", "b", "d", "n.1"))
 #' @export
 #' @rdname faers_phv_signal
 methods::setGeneric("faers_phv_signal", function(.object, ...) {
-    methods::makeStandardGeneric("faers_phv_signal")
+    standardGeneric("faers_phv_signal")
 })
 
 #' @param .methods Just an alias of `method` in [phv_signal].

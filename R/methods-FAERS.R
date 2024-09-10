@@ -46,7 +46,7 @@
 #' @export
 #' @rdname FAERS-methods
 methods::setGeneric("faers_get", function(object, ...) {
-    methods::makeStandardGeneric("faers_get")
+    standardGeneric("faers_get")
 })
 
 #' @param field A string indicates the FAERS fields to use. Only values
@@ -78,7 +78,7 @@ faers_add_meddra <- function(data, hierarchy, remove_idx = TRUE) {
 #' @export
 #' @rdname FAERS-methods
 methods::setGeneric("faers_mget", function(object, ...) {
-    methods::makeStandardGeneric("faers_mget")
+    standardGeneric("faers_mget")
 })
 
 #' @param fields A character vector specifying the fields to use. Only values
@@ -99,7 +99,7 @@ utils::globalVariables(c("meddra_hierarchy_idx"))
 #' @aliases faers_primaryid
 #' @rdname FAERS-methods
 methods::setGeneric("faers_primaryid", function(object, ...) {
-    methods::makeStandardGeneric("faers_primaryid")
+    standardGeneric("faers_primaryid")
 })
 
 #' @export
@@ -139,7 +139,7 @@ methods::setMethod("$", "FAERSascii", function(x, name) {
 #' @export
 #' @rdname FAERS-methods
 methods::setGeneric("faers_keep", function(object, ...) {
-    methods::makeStandardGeneric("faers_keep")
+    standardGeneric("faers_keep")
 })
 
 #' @export
@@ -171,7 +171,7 @@ methods::setMethod("faers_keep", "FAERSascii", function(object, primaryid = NULL
 #' @export
 #' @rdname FAERS-methods
 methods::setGeneric("faers_filter", function(.object, ...) {
-    methods::makeStandardGeneric("faers_filter")
+    standardGeneric("faers_filter")
 })
 
 #' @param .fn A function or formula, accept the field data as the input and
@@ -222,7 +222,7 @@ methods::setMethod(
 #' @export
 #' @rdname FAERS-methods
 methods::setGeneric("faers_modify", function(.object, ...) {
-    methods::makeStandardGeneric("faers_modify")
+    standardGeneric("faers_modify")
 })
 
 #' @export

@@ -115,7 +115,7 @@ methods::setMethod("show", "MedDRA", function(object) {
 #' @aliases meddra_hierarchy
 #' @rdname MedDRA-class
 methods::setGeneric("meddra_hierarchy", function(object, ...) {
-    methods::makeStandardGeneric("meddra_hierarchy")
+    standardGeneric("meddra_hierarchy")
 })
 
 #' @export
@@ -130,7 +130,7 @@ methods::setMethod("meddra_hierarchy", "MedDRA", function(object) {
 #' @aliases meddra_smq
 #' @rdname MedDRA-class
 methods::setGeneric("meddra_smq", function(object, ...) {
-    methods::makeStandardGeneric("meddra_smq")
+    standardGeneric("meddra_smq")
 })
 
 #' @export
@@ -145,7 +145,7 @@ methods::setMethod("meddra_smq", "MedDRA", function(object) {
 #' @aliases meddra_version
 #' @rdname MedDRA-class
 methods::setGeneric("meddra_version", function(object, ...) {
-    methods::makeStandardGeneric("meddra_version")
+    standardGeneric("meddra_version")
 })
 
 #' @export

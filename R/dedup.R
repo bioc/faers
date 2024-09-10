@@ -18,7 +18,7 @@
 #' @export
 #' @name faers_dedup
 methods::setGeneric("faers_dedup", function(object, ...) {
-    methods::makeStandardGeneric("faers_dedup")
+    standardGeneric("faers_dedup")
 })
 
 #' @param remove_deleted_cases If `TRUE`, will remove all

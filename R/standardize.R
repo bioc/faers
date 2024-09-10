@@ -16,7 +16,7 @@
 #' @export
 #' @name faers_standardize
 methods::setGeneric("faers_standardize", function(object, ...) {
-    methods::makeStandardGeneric("faers_standardize")
+    standardGeneric("faers_standardize")
 })
 
 #' @param meddra_path A string, define the path of MedDRA directory.

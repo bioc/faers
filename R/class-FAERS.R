@@ -192,7 +192,7 @@ methods::setMethod("show", "FAERSascii", function(object) {
 #' @aliases faers_data
 #' @rdname FAERS-class
 methods::setGeneric("faers_data", function(object, ...) {
-    methods::makeStandardGeneric("faers_data")
+    standardGeneric("faers_data")
 })
 
 #' @export
@@ -206,7 +206,7 @@ methods::setMethod("faers_data", "FAERS", function(object) {
 #' @aliases faers_year
 #' @rdname FAERS-class
 methods::setGeneric("faers_year", function(object) {
-    methods::makeStandardGeneric("faers_year")
+    standardGeneric("faers_year")
 })
 
 #' @export
@@ -221,7 +221,7 @@ methods::setMethod("faers_year", "FAERS", function(object) {
 #' @aliases faers_quarter
 #' @rdname FAERS-class
 methods::setGeneric("faers_quarter", function(object) {
-    methods::makeStandardGeneric("faers_quarter")
+    standardGeneric("faers_quarter")
 })
 
 #' @export
@@ -237,7 +237,7 @@ methods::setMethod("faers_quarter", "FAERS", function(object) {
 #' @aliases faers_period
 #' @rdname FAERS-class
 methods::setGeneric("faers_period", function(object) {
-    methods::makeStandardGeneric("faers_period")
+    standardGeneric("faers_period")
 })
 
 #' @export
@@ -252,7 +252,7 @@ methods::setMethod("faers_period", "FAERS", function(object) {
 #' @aliases faers_meddra
 #' @rdname FAERS-class
 methods::setGeneric("faers_meddra", function(object, ...) {
-    methods::makeStandardGeneric("faers_meddra")
+    standardGeneric("faers_meddra")
 })
 
 #' @param use A string, what meddra data to use, "hierarchy" or "smq". If
@@ -278,7 +278,7 @@ methods::setMethod("faers_meddra", "FAERS", function(object, use = NULL) {
 #' @aliases faers_deleted_cases
 #' @rdname FAERS-class
 methods::setGeneric("faers_deleted_cases", function(object, ...) {
-    methods::makeStandardGeneric("faers_deleted_cases")
+    standardGeneric("faers_deleted_cases")
 })
 
 #' @export
@@ -294,7 +294,7 @@ methods::setMethod("faers_deleted_cases", "FAERSascii", function(object) {
 #' @aliases faers_header
 #' @rdname FAERS-class
 methods::setGeneric("faers_header", function(object) {
-    methods::makeStandardGeneric("faers_header")
+    standardGeneric("faers_header")
 })
 
 #' @export

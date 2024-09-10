@@ -22,7 +22,7 @@
 #' @export
 #' @name faers_merge
 methods::setGeneric("faers_merge", function(object, ...) {
-    methods::makeStandardGeneric("faers_merge")
+    standardGeneric("faers_merge")
 })
 
 #' @inheritParams faers_mget
