@@ -32,7 +32,7 @@ methods::setMethod("faers_standardize", "FAERSascii", function(object, meddra_pa
     # https://stackoverflow.com/questions/70181149/is-a-saved-and-loaded-data-table-with-qs-a-correct-data-table
     # fix error: when load a saved FAERS object, don't change by reference
     cli::cli_alert("standardize {.field Preferred Term} in indi")
-    object@data$indi <- dt_shallow(object@data$indi)
+    object@data$indi <- data.table::as.data.table(object@data$indi)
 
     meddra_cols <- c("meddra_hierarchy_idx", "meddra_hierarchy_from", "meddra_code", "meddra_pt")
     object@data$indi[, (meddra_cols) := meddra_standardize_pt(
@@ -41,7 +41,7 @@ methods::setMethod("faers_standardize", "FAERSascii", function(object, meddra_pa
     )]
 
     cli::cli_alert("standardize {.field Preferred Term} in reac")
-    object@data$reac <- dt_shallow(object@data$reac)
+    object@data$reac <- data.table::as.data.table(object@data$reac)
     object@data$reac[, (meddra_cols) := meddra_standardize_pt(
         clean_reac_pt(pt, meddra_data@hierarchy), # nolint
         meddra_data@hierarchy
