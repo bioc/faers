@@ -5,14 +5,16 @@
 #'
 #' Field specific operations:
 #' - `demo`:
-#'   - Rename "gndr_cod" into "sex" for periods before 2014q2.
+#'   - Rename "gndr_cod" into "gender" for periods before 2014q2.
+#'   - Rename "sex" into "gender" for periods after or equal to 2014q2.
 #'   - Rename "case" and "i_f_cod" into "caseid" and "i_f_code" for legacy aers,
 #'     before 2012q3.
 #'   - "age_in_years" was added, measured in years.
 #'   - "country_code" was added (encoded according to the `iso2c` standards), it
 #'      will be convenient to translate it into other code with
-#'      [countrycode][countrycode::countrycode].
-#'   - "gender" was added, which recoded "UNK", "NS", and "YR" in "sex" as `NA`.
+#'      [countrycode()][countrycode::countrycode].
+#'   - "sex" was added, which recoded "F" as "Female", "M" as "Male" and other
+#'     values as `NA`.
 #' - `ther`:
 #'   Rename "drug_seq" into "dsg_drug_seq" for legacy aers, before 2012q3.
 #' - `indi`:
@@ -46,7 +48,9 @@ unify_ascii <- function(data, field, year, quarter) {
 
 unify_ascii_demo <- function(data, year, quarter) {
     if (is_before_period(year, quarter, 2014L, "q2")) {
-        data.table::setnames(data, "gndr_cod", "sex")
+        data.table::setnames(data, "gndr_cod", "gender")
+    } else {
+        data.table::setnames(data, "sex", "gender")
     }
     if (is_from_laers(year, quarter)) {
         data.table::setnames(
@@ -294,9 +298,11 @@ unify_ascii_demo <- function(data, year, quarter) {
             cli::cli_warn("Cannot map {.val {missed_reporter_country}} into country_code")
         }
     }
-    # Adding a new column gender
-    data[, gender := data.table::fifelse(
-        sex %chin% c("UNK", "NS", "YR"), NA_character_, sex
+    # Adding a new column sex
+    data[, sex := data.table::fcase(
+        gender == "F", "Female",
+        gender == "M", "Male",
+        default = NA_character_
     )]
     # nolint end
 }

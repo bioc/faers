@@ -150,7 +150,7 @@ dedup_faers_ascii <- function(data, deleted_cases = NULL) {
     )
     out <- unique(out, by = "primaryid", cols = c(
         "year", "quarter", "caseid", "caseversion",
-        "fda_dt", "i_f_code", "age_in_years", "gender",
+        "fda_dt", "i_f_code", "age_in_years", "sex",
         "country_code", "event_dt"
     ))
 
@@ -226,10 +226,10 @@ dedup_faers_ascii <- function(data, deleted_cases = NULL) {
     ]
 
     # consider two cases to be the same if they had a complete match of the
-    # eight criteria which are gender, age, reporting country, event date, start
+    # eight criteria which are sex, age, reporting country, event date, start
     # date, drug indications, drugs administered, and adverse reactions.  Two
     # records were also considered duplicated if they mismatch in only one of
-    # the gender, age, reporting country, event date, start date, or drug
+    # the sex, age, reporting country, event date, start date, or drug
     # indications fields, but not the drug or adverse event fields.
 
     # Notes: always remember NA value in data.table, will be regarded as equal.
@@ -237,10 +237,10 @@ dedup_faers_ascii <- function(data, deleted_cases = NULL) {
     # other differentiated values, like ..__na_null__..1, ..__na_null__..2, and
     # so on.
     # round age_in_years to prevent minimal differences in age
-    cli::cli_alert("deduplication from multiple sources by matching gender, age, reporting country, event date, start date, drug indications, drugs administered, and adverse reactions")
+    cli::cli_alert("deduplication from multiple sources by matching sex, age, reporting country, event date, start date, drug indications, drugs administered, and adverse reactions")
     out[, age_in_years_round := round(age_in_years, 2L)]
     can_be_ignored_columns <- c(
-        "event_dt", "gender", "age_in_years_round", "country_code",
+        "event_dt", "sex", "age_in_years_round", "country_code",
         "aligned_start_dt", "aligned_indi"
     )
     must_matched_columns <- c("aligned_drugs", "aligned_reac")
@@ -303,7 +303,7 @@ dedup_faers_ascii <- function(data, deleted_cases = NULL) {
     #     x
     # }), .SDcols = all_columns]
     # "caseversion", "fda_dt", "i_f_code",
-    # "event_dt", "gender", "age_in_years", "country_code",
+    # "event_dt", "sex", "age_in_years", "country_code",
     # "aligned_drugs", "aligned_reac", "aligned_start_dt", "aligned_indi"
     out[, c("year", "quarter", "primaryid")]
 }

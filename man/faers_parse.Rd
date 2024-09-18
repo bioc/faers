@@ -48,14 +48,16 @@ Field specific operations:
 \itemize{
 \item \code{demo}:
 \itemize{
-\item Rename "gndr_cod" into "sex" for periods before 2014q2.
+\item Rename "gndr_cod" into "gender" for periods before 2014q2.
+\item Rename "sex" into "gender" for periods after or equal to 2014q2.
 \item Rename "case" and "i_f_cod" into "caseid" and "i_f_code" for legacy aers,
 before 2012q3.
 \item "age_in_years" was added, measured in years.
 \item "country_code" was added (encoded according to the \code{iso2c} standards), it
 will be convenient to translate it into other code with
-\link[countrycode:countrycode]{countrycode}.
-\item "gender" was added, which recoded "UNK", "NS", and "YR" in "sex" as \code{NA}.
+\link[countrycode:countrycode]{countrycode()}.
+\item "sex" was added, which recoded "F" as "Female", "M" as "Male" and other
+values as \code{NA}.
 }
 \item \code{ther}:
 Rename "drug_seq" into "dsg_drug_seq" for legacy aers, before 2012q3.

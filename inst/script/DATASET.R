@@ -11,7 +11,9 @@ saveRDS(
 )
 
 #' Sampled 2004q1 and 2017q2 standardized data from FAERS
+set.seed(2004L)
 faers_sample(2004, "q1", dir = "inst/extdata")
+set.seed(2007L)
 faers_sample(2017, "q2", dir = "inst/extdata")
 data <- faers(c(2004, 2017), c("q1", "q2"),
     dir = system.file("extdata", package = "faers"),
