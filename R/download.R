@@ -61,7 +61,7 @@ download_inform <- function(urls, file_paths, ...) {
         arg_list <- c(
             list(
                 urls = urls, destfiles = file_paths, resume = FALSE,
-                progress = interactive(), timeout = Inf
+                progress = interactive(), multi_timeout = Inf
             ),
             rlang::list2(...)
         )
