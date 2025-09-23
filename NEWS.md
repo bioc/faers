@@ -1,3 +1,8 @@
+# faers 1.5.1
+
+* Fixed error in `handle_setopt(h, ...)` caused by unsupported option `multi_timeout`.
+  Requires `curl` >= 6.0.0.
+
 # faers 1.1.6
 
 * fda_drugs() now directly use a fixed url to download the data
