@@ -54,7 +54,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE)) {
 BiocManager::install("faers")
 ```
 
-You can install the development version of `faers` from [GitHub](https://github.com/Yunuuuu/faers) with:
+You can install the development version of `faers` from [GitHub](https://github.com/WangLabCSU/faers) with:
 
 ```{r, eval=FALSE}
 if (!requireNamespace("pak")) {
@@ -65,7 +65,7 @@ if (!requireNamespace("pak")) {
         )
     )
 }
-pak::pkg_install("Yunuuuu/faers")
+pak::pkg_install("WangLabCSU/faers")
 ```
 
 ## Pharmacovigilance Analysis using FAERS

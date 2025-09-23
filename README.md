@@ -43,7 +43,7 @@ BiocManager::install("faers")
 ```
 
 You can install the development version of `faers` from
-[GitHub](https://github.com/Yunuuuu/faers) with:
+[GitHub](https://github.com/WangLabCSU/faers) with:
 
 ``` r
 if (!requireNamespace("pak")) {
@@ -54,7 +54,7 @@ if (!requireNamespace("pak")) {
         )
     )
 }
-pak::pkg_install("Yunuuuu/faers")
+pak::pkg_install("WangLabCSU/faers")
 ```
 
 ## Pharmacovigilance Analysis using FAERS
@@ -335,15 +335,12 @@ for details.
 
 ``` r
 # Please make sure to replace dir with your own directory path, as the file
-# included in the package is a sampled version. 
+# included in the package is a sampled version.
 data1 <- faers(2004, "q1",
     dir = system.file("extdata", package = "faers"),
     compress_dir = tempdir()
 )
 #> Finding 1 file already downloaded: 'aers_ascii_2004q1.zip'
-```
-
-``` r
 data1
 #> FAERS data from 1 Quarterly ascii file
 #>   Total reports: 100 (with duplicates)
@@ -360,9 +357,6 @@ data2 <- faers(c(2004, 2017), c("q1", "q2"),
 #> Finding 2 files already downloaded: 'aers_ascii_2004q1.zip' and
 #> 'faers_ascii_2017q2.zip'
 #> → Combining all 2 <FAERS> Datas
-```
-
-``` r
 data2
 #> FAERS data from 2 Quarterly ascii files
 #>   Total reports: 200 (with duplicates)
@@ -471,9 +465,7 @@ data <- faers_standardize(data2, meddra_path)
 To proceed following steps, we just read a standardized data.
 
 ``` r
-data <- readRDS(system.file("extdata", "standardized_data.rds",
-    package = "faers"
-))
+data <- readRDS(system.file("extdata", "standardized_data.rds", package = "faers"))
 data
 #> Standardized FAERS data from 2 Quarterly ascii files
 #>   Total reports: 200 (with duplicates)
@@ -486,9 +478,6 @@ specify these components using the use argument.
 ``` r
 faers_meddra(data)
 #> Hierarchy data for MedDRA (version 26.1)
-```
-
-``` r
 faers_meddra(data, use = "hierarchy")
 #> Index: <primary_soc_fg>
 #>        llt_code
@@ -866,9 +855,6 @@ data <- faers_dedup(data)
 #> → deduplication from the same source by retain the most recent report
 #> → merging `drug`, `indi`, `ther`, and `reac` data
 #> → deduplication from multiple sources by matching sex, age, reporting country, event date, start date, drug indications, drugs administered, and adverse reactions
-```
-
-``` r
 data
 #> Standardized and De-duplicated FAERS data from 2 Quarterly ascii files
 #>   Total unique reports: 200
@@ -899,15 +885,8 @@ fda_insulin <- fda_drugs()[
     grepl(insulin_pattern, ActiveIngredient, ignore.case = TRUE)
 ]
 #> → Using Drugs@FDA data from cached
-#>   '/home/yun/.cache/R/faers/faers/fdadrugs/fda_drugs_data_2024-09-19.zip'
-#>   Snapshot date: 2024-09-19
-#> Warning: One or more parsing issues, call `problems()` on your data frame for details,
-#> e.g.:
-#>   dat <- vroom(...)
-#>   problems(dat)
-```
-
-``` r
+#>   '/home/yun/.cache/R/faers/faers/fdadrugs/fda_drugs_data_2025-09-23.zip'
+#>   Snapshot date: 2025-09-23
 insulin_pattern <- paste0(
     unique(tolower(c(insulin_names, fda_insulin$DrugName))),
     collapse = "|"
@@ -949,9 +928,6 @@ insulin_signals <- faers_phv_signal(insulin_data,
 #> ℹ Running `phv_obsexp_shrink()`
 #> ℹ Running `phv_fisher()`
 #> ℹ Running `phv_ebgm()`
-```
-
-``` r
 insulin_signals
 #> Key: <soc_name>
 #>                                                                soc_name     a
@@ -1096,9 +1072,6 @@ insulin_signals_hlgt <- faers_phv_signal(
 #> ℹ Running `phv_obsexp_shrink()`
 #> ℹ Running `phv_fisher()`
 #> ℹ Running `phv_ebgm()`
-```
-
-``` r
 insulin_signals_hlgt
 #> Key: <hlgt_name>
 #>                                                       hlgt_name     a     b
@@ -1198,9 +1171,9 @@ insulin_signals_hlgt
 
 ``` r
 sessionInfo()
-#> R version 4.4.0 (2024-04-24)
+#> R version 4.4.2 (2024-10-31)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04 LTS
+#> Running under: Ubuntu 24.04.1 LTS
 #> 
 #> Matrix products: default
 #> BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/libmkl_rt.so;  LAPACK version 3.8.0
@@ -1218,25 +1191,25 @@ sessionInfo()
 #> [1] stats     graphics  grDevices utils     datasets  methods   base     
 #> 
 #> other attached packages:
-#> [1] faers_1.1.6
+#> [1] faers_1.1.7
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] Matrix_1.7-0        bit_4.0.5           gtable_0.3.5       
-#>  [4] dplyr_1.1.4         compiler_4.4.0      crayon_1.5.3       
-#>  [7] tidyselect_1.2.1    MatrixModels_0.5-3  parallel_4.4.0     
-#> [10] scales_1.3.0        splines_4.4.0       BiocParallel_1.38.0
-#> [13] yaml_2.3.8          fastmap_1.2.0       lattice_0.22-6     
-#> [16] coda_0.19-4.1       R6_2.5.1            ggplot2_3.5.1      
-#> [19] generics_0.1.3      MCMCpack_1.7-0      knitr_1.47         
+#>  [1] Matrix_1.7-1        bit_4.0.5           gtable_0.3.6       
+#>  [4] dplyr_1.1.4         compiler_4.4.2      crayon_1.5.3       
+#>  [7] tidyselect_1.2.1    MatrixModels_0.5-3  parallel_4.4.2     
+#> [10] scales_1.4.0        splines_4.4.2       BiocParallel_1.38.0
+#> [13] yaml_2.3.10         fastmap_1.2.0       lattice_0.22-6     
+#> [16] coda_0.19-4.1       R6_2.6.1            ggplot2_4.0.0      
+#> [19] generics_0.1.3      MCMCpack_1.7-0      knitr_1.50         
 #> [22] MASS_7.3-61         tibble_3.2.1        openEBGM_0.9.1     
-#> [25] munsell_0.5.1       pillar_1.9.0        tzdb_0.4.0         
-#> [28] rlang_1.1.4         utf8_1.2.4          xfun_0.45          
-#> [31] bit64_4.0.5         cli_3.6.3           magrittr_2.0.3     
-#> [34] mcmc_0.9-8          digest_0.6.36       grid_4.4.0         
-#> [37] vroom_1.6.5         quantreg_5.98       lifecycle_1.0.4    
-#> [40] vctrs_0.6.5         evaluate_0.24.0     SparseM_1.84       
-#> [43] glue_1.7.0          data.table_1.15.4   codetools_0.2-20   
-#> [46] survival_3.7-0      colorspace_2.1-0    fansi_1.0.6        
-#> [49] rmarkdown_2.27      tools_4.4.0         pkgconfig_2.0.3    
-#> [52] htmltools_0.5.8.1
+#> [25] RColorBrewer_1.1-3  pillar_1.9.0        tzdb_0.4.0         
+#> [28] rlang_1.1.6         utf8_1.2.5          xfun_0.52          
+#> [31] S7_0.2.0            bit64_4.0.5         cli_3.6.5          
+#> [34] magrittr_2.0.3      mcmc_0.9-8          digest_0.6.37      
+#> [37] grid_4.4.2          vroom_1.6.5         quantreg_5.99.1    
+#> [40] lifecycle_1.0.4     vctrs_0.6.5         evaluate_1.0.3     
+#> [43] SparseM_1.84-2      glue_1.8.0          data.table_1.16.99 
+#> [46] farver_2.1.2        codetools_0.2-20    survival_3.7-0     
+#> [49] fansi_1.0.6         rmarkdown_2.29      tools_4.4.2        
+#> [52] pkgconfig_2.0.3     htmltools_0.5.8.1
 ```
