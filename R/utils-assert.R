@@ -13,3 +13,9 @@ assert_inclusive <- function(x, y, allow_null = FALSE,
         ), call = call)
     }
 }
+
+assert_internet <- function(call = rlang::caller_env()) {
+    if (!curl::has_internet()) {
+        cli::cli_abort("No internet", call = call)
+    }
+}

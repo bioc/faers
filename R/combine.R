@@ -152,7 +152,8 @@ combine_faers_xml_data <- function(x) {
     )
 }
 
-combine_faers_meddra <- function(lst, standardization, call = rlang::caller_env()) {
+combine_faers_meddra <- function(lst, standardization, 
+                                call = rlang::caller_env()) {
     if (!standardization) {
         return(NULL)
     }
