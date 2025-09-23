@@ -109,14 +109,11 @@ base_download_inform <- function(urls, file_paths, ...) {
     if (l <- length(urls)) {
         assert_internet()
         if (l == 1L) {
-            cli::cli_inform("Downloading 1 file from: {.url {urls}}")
+            cli::cli_inform("Downloading file from: {.url {urls}}")
         } else {
             cli::cli_inform("Downloading {.val {l}} files")
         }
-        status <- utils::download.file(urls,
-            destfile = file_paths, ...,
-            method = "libcurl"
-        )
+        status <- utils::download.file(urls, destfile = file_paths, ...)
         is_success <- status == 0L
         is_need_deleted <- !is_success & file.exists(file_paths)
         if (any(is_need_deleted)) file.remove(file_paths[is_need_deleted])

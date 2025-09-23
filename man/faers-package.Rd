@@ -10,7 +10,7 @@ The FDA Adverse Event Reporting System (FAERS) is a database used for the sponta
 \seealso{
 Useful links:
 \itemize{
-  \item Report bugs at \url{https://github.com/Yunuuuu/faers}
+  \item Report bugs at \url{https://github.com/WangLabCSU/faers}
 }
 
 }
