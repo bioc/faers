@@ -120,7 +120,7 @@ details.
 
 ```{r}
 # Please make sure to replace dir with your own directory path, as the file
-# included in the package is a sampled version. 
+# included in the package is a sampled version.
 data1 <- faers(2004, "q1",
     dir = system.file("extdata", package = "faers"),
     compress_dir = tempdir()
@@ -159,9 +159,7 @@ data <- faers_standardize(data2, meddra_path)
 
 To proceed following steps, we just read a standardized data.
 ```{r}
-data <- readRDS(system.file("extdata", "standardized_data.rds",
-    package = "faers"
-))
+data <- readRDS(system.file("extdata", "standardized_data.rds", package = "faers"))
 data
 ```
 
