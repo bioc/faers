@@ -27,6 +27,6 @@ fda_host <- function(prefix = "www") {
     sprintf("https://%s.fda.gov", prefix)
 }
 
-faers_file_format <- c("ascii", "xml")
-faers_file_quarters <- c("q1", "q2", "q3", "q4")
-faers_ascii_file_fields <- c("demo", "drug", "indi", "reac", "ther", "rpsr", "outc")
+FAERS_FILE_FORMAT <- c("ascii", "xml")
+FAERS_FILE_QUARTERS <- c("q1", "q2", "q3", "q4")
+FAERS_ASCII_FILE_FIELDS <- c("demo", "drug", "indi", "reac", "ther", "rpsr", "outc")

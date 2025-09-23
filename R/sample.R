@@ -9,7 +9,7 @@ faers_sample <- function(year, quarter, size = 100L, dir = getwd()) {
         basename(ascii_files), "\\d+q\\d(_new)?\\.txt$",
         ignore.case = TRUE
     ))
-    ascii_files <- ascii_files[faers_ascii_file_fields]
+    ascii_files <- ascii_files[FAERS_ASCII_FILE_FIELDS]
     data_lst <- lapply(ascii_files, function(file) {
         out <- data.table::fread(
             file = file,

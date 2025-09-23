@@ -33,11 +33,11 @@ methods::setGeneric("faers_merge", function(object, ...) {
 #' @method faers_merge FAERSascii
 #' @rdname faers_merge
 methods::setMethod("faers_merge", "FAERSascii", function(object, fields = NULL, all = TRUE, all.x = all, all.y = all) {
-    assert_inclusive(fields, faers_ascii_file_fields, null_ok = TRUE)
+    assert_inclusive(fields, FAERS_ASCII_FILE_FIELDS, allow_null = TRUE)
     if (is.null(fields)) {
-        fields <- faers_ascii_file_fields
+        fields <- FAERS_ASCII_FILE_FIELDS
     } else {
-        fields <- intersect(faers_ascii_file_fields, fields)
+        fields <- intersect(FAERS_ASCII_FILE_FIELDS, fields)
     }
     if (length(fields) == 1L) {
         return(faers_get(object, field = fields))

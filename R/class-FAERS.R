@@ -71,10 +71,10 @@ validate_faers <- function(object) {
     if (length(object@year) != length(object@quarter)) {
         return("the length of `@year` and `@quarter` must be the same")
     }
-    if (!all(object@quarter %chin% faers_file_quarters)) {
+    if (!all(object@quarter %chin% FAERS_FILE_QUARTERS)) {
         return(sprintf(
             "`@quarter` must be values in %s",
-            oxford_comma(faers_file_quarters, final = "or")
+            oxford_comma(FAERS_FILE_QUARTERS, final = "or")
         ))
     }
     if (anyDuplicated(faers_period(object))) {
@@ -87,10 +87,10 @@ validate_faers <- function(object) {
     if (length(object@deduplication) != 1L || is.na(object@deduplication)) {
         return("@deduplication must be a bool, `TRUE` or `FALSE`")
     }
-    if (!rlang::is_string(object@format, faers_file_format)) {
+    if (!rlang::is_string(object@format, FAERS_FILE_FORMAT)) {
         return(sprintf(
             "`@format` must be a string of %s",
-            oxford_comma(faers_file_format, final = "or")
+            oxford_comma(FAERS_FILE_FORMAT, final = "or")
         ))
     }
     TRUE
@@ -114,9 +114,9 @@ methods::setClass(
 
 methods::setValidity("FAERSascii", function(object) {
     data <- object@data
-    if (!all(faers_ascii_file_fields %chin% names(data))) {
+    if (!all(FAERS_ASCII_FILE_FIELDS %chin% names(data))) {
         return(sprintf(
-            "`@data` must contain the all ascii fields, including %s", oxford_comma(faers_ascii_file_fields)
+            "`@data` must contain the all ascii fields, including %s", oxford_comma(FAERS_ASCII_FILE_FIELDS)
         ))
     }
     if (!all(vapply(data, data.table::is.data.table, logical(1L)))) {

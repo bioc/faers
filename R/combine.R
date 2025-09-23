@@ -135,13 +135,13 @@ combine_faers_data <- function(x, type) {
 }
 
 combine_faers_ascii_data <- function(x) {
-    data_list <- lapply(faers_ascii_file_fields, function(field) {
+    data_list <- lapply(FAERS_ASCII_FILE_FIELDS, function(field) {
         data.table::rbindlist(
             lapply(x, function(obj) obj@data[[field]]),
             fill = TRUE, use.names = TRUE
         )
     })
-    data.table::setattr(data_list, "names", faers_ascii_file_fields)
+    data.table::setattr(data_list, "names", FAERS_ASCII_FILE_FIELDS)
     data_list
 }
 

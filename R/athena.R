@@ -15,7 +15,7 @@
 athena <- function(use = NULL, list = FALSE, force = FALSE, url = NULL) {
     assert_bool(list)
     assert_bool(force)
-    assert_string(url, null_ok = TRUE)
+    assert_string(url, allow_null = TRUE)
     if (!is.null(url) && !startsWith(url, "https")) {
         cli::cli_abort("{.arg url} must start with {.val https}")
     }
@@ -24,7 +24,7 @@ athena <- function(use = NULL, list = FALSE, force = FALSE, url = NULL) {
     if (list) {
         list.files(path)
     } else {
-        assert_inclusive(use, use_athena, null_ok = TRUE)
+        assert_inclusive(use, use_athena, allow_null = TRUE)
         use <- use %||% use_athena
         out <- athena_loads(path, use)
         if (length(use) == 1L) {

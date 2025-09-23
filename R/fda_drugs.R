@@ -20,7 +20,7 @@ fda_drugs <- function(pattern = "Products", url = NULL,
                       list = FALSE, force = FALSE) {
     assert_bool(list)
     assert_bool(force)
-    assert_string(url, null_ok = TRUE)
+    assert_string(url, allow_null = TRUE)
     file <- fda_drugs_file(url, force)
     fda_drugs_load(file, pattern = pattern, list = list)
 }

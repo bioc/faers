@@ -90,7 +90,7 @@ phv_signal <- function(a, b, c, d, methods = NULL, alpha = 0.05, correct = TRUE,
         "ror", "prr", "chisq", "bcpnn_norm", "bcpnn_mcmc",
         "obsexp_shrink", "fisher", "ebgm"
     )
-    assert_inclusive(methods, allowed_methods, null_ok = TRUE)
+    assert_inclusive(methods, allowed_methods, allow_null = TRUE)
     methods <- unique(methods %||% allowed_methods)
     out <- data.table(expected = (a + b) / (a + b + c + d) * (a + c))
     args <- list(a = a, b = b, c = c, d = d, alpha = alpha)
@@ -408,7 +408,12 @@ phv_obsexp_shrink <- function(a, b, c, d, alpha = 0.05, alpha1 = 0.5, alpha2 = 0
 phv_ebgm <- function(a, b, c, d, alpha = 0.05, theta_init = NULL, squashing = TRUE) {
     assert_phv_table(a, b, c, d)
     assert_bool(squashing)
-    assert_data_frame(theta_init, null_ok = TRUE)
+    assert_s3_class(
+        theta_init,
+        is_class = is.data.frame,
+        what = "a data frame",
+        allow_null = TRUE
+    )
     proc <- data.table(N = a, E = (a + b) / (a + b + c + d) * (a + c))
     # For the purpose of reducing computational burden, zero counts should not
     # typically be included for hyperparameter estimation; however, they may

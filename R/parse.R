@@ -19,17 +19,17 @@
 #' )
 #' @export
 faers_parse <- function(path, format = NULL, year = NULL, quarter = NULL, compress_dir = getwd()) {
-    assert_string(path, empty_ok = FALSE)
+    assert_string(path, allow_empty = FALSE)
     if (is.null(format)) {
         format <- str_extract(basename(path), "xml|ascii", ignore.case = TRUE)
-        if (!any(format == faers_file_format)) {
+        if (!any(format == FAERS_FILE_FORMAT)) {
             cli::cli_abort(c(
                 "Cannot parse file format from {.arg path}",
                 i = "Try to set {.arg format} manually"
             ))
         }
     } else {
-        format <- match.arg(format, faers_file_format)
+        format <- match.arg(format, FAERS_FILE_FORMAT)
     }
     year <- year %||% str_extract(path, "20\\d+(?=q[1-4])")
     year <- as.integer(year)
@@ -57,11 +57,11 @@ parse_ascii <- function(path, year, quarter) {
         basename(files), "\\d+q\\d(_new)?\\.txt$",
         ignore.case = TRUE
     ))
-    idx <- match(faers_ascii_file_fields, fields)
+    idx <- match(FAERS_ASCII_FILE_FIELDS, fields)
     if (anyNA(idx)) {
         cli::cli_abort(sprintf(
             "Cannot find %s",
-            oxford_comma(style_file(faers_ascii_file_fields[is.na(idx)]))
+            oxford_comma(style_file(FAERS_ASCII_FILE_FIELDS[is.na(idx)]))
         ))
     }
     files <- files[idx]

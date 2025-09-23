@@ -19,8 +19,8 @@
 #' )
 #' @export
 faers_download <- function(years, quarters, format = NULL, dir = getwd(), ...) {
-    format <- match.arg(format, faers_file_format)
-    assert_string(dir, empty_ok = FALSE)
+    format <- match.arg(format, FAERS_FILE_FORMAT)
+    assert_string(dir, allow_empty = FALSE)
     if (format == "xml") {
         # only faers database has xml data files
         is_aers_pairs <- is_from_laers(years, quarters)

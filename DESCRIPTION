@@ -23,7 +23,7 @@ Imports:
     MCMCpack,
     methods,
     openEBGM,
-    rlang (>= 1.1.0),
+    rlang,
     rvest,
     tools,
     utils,
@@ -58,6 +58,7 @@ Collate:
     'import-standalone-assert.R'
     'import-standalone-cli.R'
     'import-standalone-obj-type.R'
+    'import-standalone-pkg.R'
     'load.R'
     'merge.R'
     'meta.R'
@@ -71,6 +72,7 @@ Collate:
     'signal.R'
     'standardize.R'
     'unify.R'
+    'utils-assert.R'
     'utils-file.R'
     'utils-str.R'
     'utils.R'

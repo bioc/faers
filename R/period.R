@@ -13,9 +13,9 @@
 #' @export
 faers_before_period <- function(years, quarters, y, q, inclusive = TRUE) {
     periods <- recycle_scalar(years = years, quarters = quarters)
-    assert_inclusive(quarters, faers_file_quarters)
-    assert_length(y, 1L)
-    if (!rlang::is_string(q, string = faers_file_quarters)) {
+    assert_inclusive(quarters, FAERS_FILE_QUARTERS)
+    assert_number_whole(y)
+    if (!rlang::is_string(q, string = FAERS_FILE_QUARTERS)) {
         cli::cli_abort("{.arg q} must be a string in {.val {faers_file_quarters}}")
     }
     assert_bool(inclusive)

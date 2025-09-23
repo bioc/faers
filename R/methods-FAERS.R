@@ -50,12 +50,12 @@ methods::setGeneric("faers_get", function(object, ...) {
 })
 
 #' @param field A string indicates the FAERS fields to use. Only values
-#' `r quote_strings(faers_ascii_file_fields)` can be used.
+#' `r quote_strings(FAERS_ASCII_FILE_FIELDS)` can be used.
 #' @export
 #' @method faers_get FAERSascii
 #' @rdname FAERS-methods
 methods::setMethod("faers_get", "FAERSascii", function(object, field) {
-    field <- match.arg(field, faers_ascii_file_fields)
+    field <- match.arg(field, FAERS_ASCII_FILE_FIELDS)
     get_field(object, field)
 })
 
@@ -87,7 +87,7 @@ methods::setGeneric("faers_mget", function(object, ...) {
 #' @method faers_mget FAERSascii
 #' @rdname FAERS-methods
 methods::setMethod("faers_mget", "FAERSascii", function(object, fields) {
-    assert_inclusive(fields, faers_ascii_file_fields)
+    assert_inclusive(fields, FAERS_ASCII_FILE_FIELDS)
     out <- lapply(fields, get_field, object = object)
     data.table::setattr(out, "names", fields)
     out
@@ -229,7 +229,7 @@ methods::setGeneric("faers_modify", function(.object, ...) {
 #' @method faers_modify FAERSascii
 #' @rdname FAERS-methods
 methods::setMethod("faers_modify", "FAERSascii", function(.object, .field, .fn, ...) {
-    .field <- match.arg(.field, faers_ascii_file_fields)
+    .field <- match.arg(.field, FAERS_ASCII_FILE_FIELDS)
     out <- dt_shallow(.object@data[[.field]])
     cannot_be_removed_cols <- c("year", "quarter", "primaryid")
     if (.object@standardization && any(.field == c("indi", "reac"))) {

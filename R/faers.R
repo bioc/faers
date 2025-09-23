@@ -12,7 +12,7 @@
 #' )
 #' @export
 faers <- function(years, quarters, format = NULL, dir = getwd(), compress_dir = dir, handle_opts = list()) {
-    format <- match.arg(format, faers_file_format)
+    format <- match.arg(format, FAERS_FILE_FORMAT)
     yq <- recycle_scalar(years = years, quarters = quarters)
     data.table::setDT(yq)
     yq <- unique(yq)

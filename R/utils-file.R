@@ -131,7 +131,7 @@ dir_or_unzip <- function(path, compress_dir, pattern, none_msg,
         return(path)
     } else if (file.exists(path)) {
         if (str_detect(path, pattern, ignore.case = ignore.case)) {
-            assert_string(compress_dir, empty_ok = FALSE)
+            assert_string(compress_dir, allow_empty = FALSE)
             return(unzip2(path, compress_dir, ignore.case = ignore.case))
         } else {
             cli::cli_abort(none_msg)

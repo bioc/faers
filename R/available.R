@@ -13,7 +13,7 @@
 #' faers_available(c(2011, 2023), c("q1", "q2"))
 #' @export
 faers_available <- function(years, quarters, force = FALSE, internal = FALSE) {
-    assert_inclusive(quarters, faers_file_quarters)
+    assert_inclusive(quarters, FAERS_FILE_QUARTERS)
     metadata <- faers_meta(force = force, internal = internal)
     years %in% metadata$year & quarters %chin% metadata$quarter
 }

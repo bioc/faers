@@ -16,7 +16,7 @@
 #' faers_load("irAEs")
 #' @export
 faers_load <- function(nm) {
-    assert_string(nm, empty_ok = FALSE)
+    assert_string(nm, allow_empty = FALSE)
     assert_inclusive(nm, data_nms)
     load_data(nm)
 }
